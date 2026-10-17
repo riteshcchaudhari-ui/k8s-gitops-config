@@ -1,0 +1,12 @@
+# Installed with: helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace --version 10.10.5 -f platform/argocd-values.yaml
+# Installed with: helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace --version <VERSION> -f platform/argocd-values.yaml
+# Traefik HTTP se baat karega, isliye ArgoCD server ko TLS ke bina chalao (sirf local ke liye)
+configs:
+  params:
+    server.insecure: true
+
+# laptop ki memory bachane ke liye jo zaroori nahi wo band
+dex:
+  enabled: false
+notifications:
+  enabled: false
