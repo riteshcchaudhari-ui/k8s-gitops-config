@@ -8,5 +8,5 @@ ingress:
 
 # laptop ki RAM bachane ke liye staging chhota rakha hai
 autoscaling:
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 4
