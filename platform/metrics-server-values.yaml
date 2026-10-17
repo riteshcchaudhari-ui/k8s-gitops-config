@@ -1,0 +1,4 @@
+# Installed with: helm upgrade --install metrics-server metrics-server/metrics-server -n kube-system --version 3.14.0 -f platform/metrics-server-values.yaml
+# kind: kubelet ke certificates self-signed hote hain, isliye TLS verify skip (sirf local ke liye)
+args:
+  - --kubelet-insecure-tls
