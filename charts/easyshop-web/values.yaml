@@ -23,3 +23,9 @@ resources:
   limits:
     cpu: 500m
     memory: 512Mi
+
+ingress:
+  enabled: true
+  className: traefik
+  host: easyshop.localhost
+  annotations: {}

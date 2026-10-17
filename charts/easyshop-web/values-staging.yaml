@@ -2,3 +2,6 @@ replicaCount: 1
 
 config:
   nextauthUrl: http://staging.localhost
+
+ingress:
+  host: staging.localhost

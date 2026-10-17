@@ -10,3 +10,6 @@ resources:
   limits:
     cpu: "1"
     memory: 768Mi
+
+ingress:
+  host: production.localhost
