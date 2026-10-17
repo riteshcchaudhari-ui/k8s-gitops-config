@@ -1,3 +1,4 @@
+# Installed with: helm upgrade --install traefik traefik/traefik -n traefik --version 39.0.9 -f platform/traefik-values.yaml
 # kind: Traefik ko control-plane node pe chalao jahan laptop ka 80/443 mapped hai
 nodeSelector:
   ingress-ready: "true"
