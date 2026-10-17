@@ -1,8 +1,18 @@
 # Installed with: helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace --version 10.10.5 -f platform/argocd-values.yaml
-# Traefik HTTP se baat karega, isliye ArgoCD server ko TLS ke bina chalao (sirf local ke liye)
+
 configs:
   params:
+    # Traefik HTTP se baat karega, isliye ArgoCD server ko TLS ke bina chalao (sirf local ke liye)
     server.insecure: true
+  cm:
+    # kind pe Traefik ClusterIP hai, to Ingress ko kabhi LB address nahi milta aur
+    # ArgoCD use Progressing dikhata rehta hai. Isliye local me Ingress ko Healthy maano.
+    # EKS me LB address milta hai, wahan ye override hata denge.
+    resource.customizations.health.networking.k8s.io_Ingress: |
+      hs = {}
+      hs.status = "Healthy"
+      hs.message = "Ingress health check skipped on local cluster"
+      return hs
 
 # laptop ki memory bachane ke liye jo zaroori nahi wo band
 dex:
