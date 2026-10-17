@@ -1,0 +1,17 @@
+# kind: Traefik ko control-plane node pe chalao jahan laptop ka 80/443 mapped hai
+nodeSelector:
+  ingress-ready: "true"
+
+tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    operator: Equal
+    effect: NoSchedule
+
+ports:
+  web:
+    hostPort: 80
+  websecure:
+    hostPort: 443
+
+service:
+  type: ClusterIP
