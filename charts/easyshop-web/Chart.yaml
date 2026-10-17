@@ -1,0 +1,6 @@
+apiVersion: v2
+name: easyshop-web
+description: EasyShop Next.js web app
+type: application
+version: 0.1.0
+appVersion: "0.1"

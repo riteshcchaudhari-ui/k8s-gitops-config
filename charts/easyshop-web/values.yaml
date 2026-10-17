@@ -1,0 +1,25 @@
+replicaCount: 2
+
+image:
+  repository: samgurjar/easyshop-web
+  tag: "0.1"
+  pullPolicy: IfNotPresent
+
+service:
+  port: 80
+
+config:
+  mongodbUri: mongodb://mongodb:27017/easyshop
+  nextauthUrl: http://localhost
+  nodeEnv: production
+
+# Secret chart ke andar nahi hai, alag se banta hai (neeche step b dekho)
+existingSecret: easyshop-secrets
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi

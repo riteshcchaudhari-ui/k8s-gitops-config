@@ -1,0 +1,12 @@
+replicaCount: 2
+
+config:
+  nextauthUrl: http://production.localhost
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 384Mi
+  limits:
+    cpu: "1"
+    memory: 768Mi

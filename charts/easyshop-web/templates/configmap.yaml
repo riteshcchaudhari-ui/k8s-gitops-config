@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-config
+  labels:
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+data:
+  MONGODB_URI: {{ .Values.config.mongodbUri | quote }}
+  NEXTAUTH_URL: {{ .Values.config.nextauthUrl | quote }}
+  NODE_ENV: {{ .Values.config.nodeEnv | quote }}
