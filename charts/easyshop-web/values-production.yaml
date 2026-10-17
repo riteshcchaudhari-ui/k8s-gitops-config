@@ -13,3 +13,7 @@ resources:
 
 ingress:
   host: production.localhost
+
+autoscaling:
+  minReplicas: 2
+  maxReplicas: 8

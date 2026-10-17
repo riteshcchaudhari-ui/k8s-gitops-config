@@ -5,3 +5,8 @@ config:
 
 ingress:
   host: staging.localhost
+
+# laptop ki RAM bachane ke liye staging chhota rakha hai
+autoscaling:
+  minReplicas: 1
+  maxReplicas: 4
