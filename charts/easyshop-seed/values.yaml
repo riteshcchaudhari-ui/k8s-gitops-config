@@ -1,0 +1,16 @@
+image:
+  repository: samgurjar/easyshop-seed
+  tag: "0.1"
+  pullPolicy: IfNotPresent
+
+mongodbUri: mongodb://mongodb:27017/easyshop
+
+backoffLimit: 3
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi

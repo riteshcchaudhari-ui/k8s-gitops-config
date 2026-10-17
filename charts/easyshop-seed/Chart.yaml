@@ -1,0 +1,6 @@
+apiVersion: v2
+name: easyshop-seed
+description: One-time Job that loads product data into MongoDB
+type: application
+version: 0.1.0
+appVersion: "0.1"
