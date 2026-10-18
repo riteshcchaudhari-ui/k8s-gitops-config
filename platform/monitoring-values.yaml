@@ -42,7 +42,10 @@ prometheus:
         memory: 512Mi
       limits:
         memory: 1Gi
-
+    additionalScrapeConfigs:
+      - job_name: 'node-exporter-local-wsl'
+        static_configs:
+          - targets: ['172.30.29.78:9100']
 grafana:
   # admin password Git me nahi, alag Secret se aata hai (neeche step b)
   admin:
