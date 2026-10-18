@@ -14,5 +14,12 @@ ports:
   websecure:
     hostPort: 443
 
+# hostPort wale single node pe naya pod tabhi bane jab purana hat jaye
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 1
+    maxSurge: 0
+
 service:
   type: ClusterIP
