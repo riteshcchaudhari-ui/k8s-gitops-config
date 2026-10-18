@@ -1,0 +1,40 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: easyshop-alerts
+  namespace: monitoring
+spec:
+  groups:
+    - name: easyshop.rules
+      rules:
+        # Brief ka required rule: 5 minute me 3 se zyada restarts
+        - alert: PodRestartingTooOften
+          expr: increase(kube_pod_container_status_restarts_total{namespace=~"staging|production"}[5m]) > 3
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: Pod {{ $labels.namespace }}/{{ $labels.pod }} baar-baar restart ho raha hai
+            description: Container {{ $labels.container }} ne pichle 5 minute me 3 se zyada baar restart kiya.
+
+        # Website ke saare pods gayab
+        - alert: EasyShopNoAvailableReplicas
+          expr: kube_deployment_status_replicas_available{namespace=~"staging|production", deployment="easyshop-web"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: easyshop-web ({{ $labels.namespace }}) ka koi pod available nahi hai
+            description: Deployment easyshop-web me 1 minute se 0 available replicas hain.
+
+        # Traefik ke 5xx errors
+        - alert: EasyShopHighErrorRate
+          expr: |
+            100 * sum by (exported_service) (rate(traefik_service_requests_total{exported_service=~".*-easyshop-web-http@kubernetes", code=~"5.."}[5m]))
+            / sum by (exported_service) (rate(traefik_service_requests_total{exported_service=~".*-easyshop-web-http@kubernetes"}[5m])) > 5
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "{{ $labels.exported_service }} par 5xx error rate 5% se upar hai"
+            description: Pichle 5 minute me 5xx responses 5% se zyada rahe.
