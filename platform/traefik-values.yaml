@@ -23,3 +23,12 @@ updateStrategy:
 
 service:
   type: ClusterIP
+
+# Prometheus metrics Traefik me default on hain. Dedicated Service + ServiceMonitor
+# banate hain taaki kube-prometheus-stack unhe scrape kare.
+metrics:
+  prometheus:
+    service:
+      enabled: true
+    serviceMonitor:
+      enabled: true
