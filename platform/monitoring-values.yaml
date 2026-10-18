@@ -1,0 +1,70 @@
+# Installed with: helm upgrade --install monitoring prometheus-community/kube-prometheus-stack -n monitoring --version 92.10.1 -f platform/monitoring-values.yaml
+# kube-prometheus-stack, kind (local) ke liye halka setup
+
+# kind me ye components 127.0.0.1 pe bind hote hain, scrape fail hota aur galat alerts aate
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeProxy:
+  enabled: false
+defaultRules:
+  rules:
+    etcd: false
+    kubeScheduler: false
+    kubeControllerManager: false
+    kubeProxy: false
+
+# kind/WSL2 me node-exporter ka root mount propagation error aata hai
+prometheus-node-exporter:
+  hostRootFsMount:
+    enabled: false
+
+prometheus:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - prometheus.localhost
+    paths:
+      - /
+  prometheusSpec:
+    retention: 2d
+    # sabhi namespaces ke ServiceMonitor/PodMonitor/rules pick karo (release label ke bina)
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+      limits:
+        memory: 1Gi
+
+grafana:
+  # admin password Git me nahi, alag Secret se aata hai (neeche step b)
+  admin:
+    existingSecret: grafana-admin
+    userKey: admin-user
+    passwordKey: admin-password
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - grafana.localhost
+    path: /
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+alertmanager:
+  alertmanagerSpec:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
