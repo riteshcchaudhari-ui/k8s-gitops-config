@@ -57,11 +57,21 @@ grafana:
     path: /
   resources:
     requests:
-      cpu: 100m
-      memory: 128Mi
-    limits:
+      cpu: 200m
       memory: 256Mi
-
+    limits:
+      memory: 512Mi
+  livenessProbe:
+    initialDelaySeconds: 240
+    periodSeconds: 20
+    timeoutSeconds: 10
+    failureThreshold: 10
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 15
+    timeoutSeconds: 10
+    failureThreshold: 20
+        
 alertmanager:
   alertmanagerSpec:
     resources:
