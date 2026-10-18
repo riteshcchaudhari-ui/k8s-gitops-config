@@ -1,0 +1,18 @@
+# Manual sync only: seed script purana data delete karti hai (deleteMany),
+# isliye production me ise auto-sync pe nahi chhodte.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: easyshop-seed-staging
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/riteshcchaudhari-ui/k8s-gitops-config.git
+    targetRevision: main
+    path: charts/easyshop-seed
+    helm:
+      releaseName: easyshop-seed
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: staging
